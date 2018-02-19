@@ -1,0 +1,40 @@
+{
+  "name": "node-red-contrib-huebridge",
+  "version": "0.0.5",
+  "description": "Node-RED nodes to simulate Phillips Hue Bridge devices",
+  "main": "hue-bridge.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikejac/node-red-contrib-homekit-mqtt.git"
+  },
+  "keywords": [
+    "hue",
+    "bridge"
+  ],
+  "node-red": {
+    "nodes": {
+      "hue-bridge": "hue-bridge.js"
+    }
+  },
+  "author": {
+    "name": "Michael Jacobsen"
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mikejac/node-red-contrib-huebridge/issues"
+  },
+  "homepage": "https://github.com/mikejac/node-red-contrib-huebridge#readme",
+  "dependencies": {
+    "ip": "^1.1.5",
+    "node-persist": "^2.1.0",
+    "peer-ssdp": "0.0.5",
+    "stoppable": "^1.0.5"
+  },
+  "maintainers": [
+    {
+      "name": "mikejac",
+      "email": "michael@visbyjacobsen.dk"
+    }
+  ]
+  }
