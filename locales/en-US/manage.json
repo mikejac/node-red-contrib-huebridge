@@ -1,0 +1,19 @@
+{
+    "manage": {
+        "label": {
+            "name": "Name"
+        },
+        "placeholder": {
+            "name": "Name"
+        },
+        "state": {
+            "connected": "Connected to broker: __broker__",
+            "disconnected": "Disconnected from broker: __broker__",
+            "connect-failed": "Connection failed to broker: __broker__"
+        },
+        "errors": {
+            "missing-config": "missing bridge configuration",
+            "missing-bridge": "missing bridge"
+        }
+    }
+}

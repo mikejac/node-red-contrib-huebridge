@@ -16,40 +16,56 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<!--
-    Configuration Node
--->
-<!--
-    <div class="form-row">
-        <label for="node-config-input-broker"><i class="fa fa-globe"></i> <span data-i18n="mqtt-client.label.broker"></span></label>
-        <input type="text" id="node-config-input-broker">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-nodename"><i class="fa fa-tag"></i> <span data-i18n="mqtt-client.label.nodename"></span></label>
-        <input type="text" id="node-config-input-nodename" data-i18n="[placeholder]mqtt-client.placeholder.nodename">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-domain"><i class="fa fa-tag"></i> <span data-i18n="mqtt-client.label.domain"></span></label>
-        <input type="text" id="node-config-input-domain" data-i18n="[placeholder]mqtt-client.label.domain">
-    </div>
--->
-
 <script type="text/x-red" data-template-name="huebridge-client">
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="huebridge.label.name"></span></label>
         <input type="text" id="node-config-input-name" data-i18n="[placeholder]huebridge.label.name">
     </div>
+
+    <div class="form-row">
+        <label for="node-config-input-address"><i class="fa fa-globe"></i> <span data-i18n="huebridge.label.address"></span></label>
+        <input type="text" id="node-config-input-address" >
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-netmask"><i class="fa fa-globe"></i> <span data-i18n="huebridge.label.netmask"></span></label>
+        <input type="text" id="node-config-input-netmask" 255.255.255.0>
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-gateway"><i class="fa fa-globe"></i> <span data-i18n="huebridge.label.gateway"></span></label>
+        <input type="text" id="node-config-input-gateway" 192.168.1.1>
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="fa fa-globe"></i> <span data-i18n="huebridge.label.port"></span></label>
+        <input type="text" id="node-config-input-port" 80>
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="huebridge-client">
-    <p>Hue Bridge - configuration<p>
+    <code>address</code> must exist on the server running this node.
 </script>
 
 <script type="text/javascript">
     RED.nodes.registerType('huebridge-client', {
         category: 'config',
         defaults: {
-            name: {value:""}
+            name: {
+                value: ""
+            },
+            address: {
+                value:"", required:true
+            },
+            netmask: {
+                value:"255.255.255.0", required:true
+            },
+            gateway: {
+                value:"192.168.1.1", required:true
+            },
+            port: {
+                value:80, required:true, validate:RED.validators.number(true)
+            }
         },
         color:"#3FADB5",
         icon: "bridge.png",
@@ -58,6 +74,11 @@
         },
         labelStyle: function() {
             return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function() {
+            if (this.timezone === undefined) {
+                $("#node-config-input-timezone").val("Europe/Copenhagen");
+            }
         }
     });
 </script>
@@ -69,20 +90,25 @@
     </div>
 
     <div class="form-row">
-        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="huebridge.label.name"></span></label>
-        <input type="text" id="node-config-input-name" data-i18n="[placeholder]huebridge.label.name">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="huebridge.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]huebridge.label.name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-timeout"><i class="fa fa-tag"></i> <span data-i18n="huebridge.label.timeout"></span></label>
+        <input type="text" id="node-input-timeout" 30>
     </div>
 
     <div class="form-tips">
         <b>Input</b><br/>
-        <code>msg.topic</code> is part of the RPC method name.<br/>
-        <code>msg.payload</code> becomes the RPC args.<br/>
+        <code>msg.topic</code> Not used.<br/>
+        <code>msg.payload</code> Not used.<br/>
         <br/>
-        <b>Outputs</b><br/>
-        <code>1:</code> Transactions<br/>
-        <code>2:</code> Log<br/>
-        <code>3:</code> Online/Offline status<br/>
     </div>
+</script>
+
+<script type="text/x-red" data-help-name="huebridge-link">
+    Inject a message to this node in order to enable pairing.
 </script>
 
 <script type="text/javascript">
@@ -97,9 +123,12 @@
             name: {
                 value: ""
             },
+            timeout: {
+                value: 30, required:true, validate: RED.validators.regex(/^(#$|(\+|[^+#]*)(\/(\+|[^+#]*))*(\/(\+|#|[^+#]*))?$)/)
+            }
         },
         inputs: 1,
-        outputs: 1,
+        outputs: 0,
         color:"#3FADB5",
         icon: "bridge.png",
         label: function() {

@@ -1,7 +1,8 @@
 {
-    "huebridge-client": {
+    "light": {
         "label": {
-            "name": "Name"
+            "name": "Name",
+            "typ": "Type"
         },
         "placeholder": {
             "name": "Name"
@@ -12,7 +13,9 @@
             "connect-failed": "Connection failed to broker: __broker__"
         },
         "errors": {
-            "missing-config": "missing bridge configuration"
+            "missing-config": "Missing bridge configuration",
+            "missing-bridge": "Missing bridge",
+            "light-create": "Unable to create light"
         }
     }
 }
