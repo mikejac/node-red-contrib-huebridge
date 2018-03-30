@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-huebridge",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Node-RED nodes to simulate Phillips Hue Bridge devices",
   "main": "huebridge.js",
   "scripts": {},
@@ -16,7 +16,9 @@
     "nodes": {
       "huebridge": "huebridge.js",
       "light": "light.js",
-      "manage": "manage.js"
+      "manage": "manage.js",
+      "zllswitch": "zllswitch.js",
+      "transform": "transform.js"
     }
   },
   "author": {

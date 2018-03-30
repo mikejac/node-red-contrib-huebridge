@@ -98,6 +98,19 @@ module.exports = function(RED) {
                 };
     
                 node.send(msg);
+            } else if (msg.topic.toLowerCase() === "deletelight") {
+                var lightid = msg.payload;
+
+                if (typeof msg.payload === 'number') {
+                    lightid = msg.payload.toString();
+                }
+
+                if (node.clientConn.bridge.dsDeleteLight(lightid) === false) {
+                    this.status({fill:"red", shape:"dot", text:"Failed to delete light"});
+                } else {
+                    this.status({fill:"green", shape:"dot", text:"Light deleted"});
+                    setTimeout(function () { node.status({}) }, 5000);
+                }
             }
         });
 

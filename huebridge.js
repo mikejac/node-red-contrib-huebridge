@@ -31,6 +31,7 @@ module.exports = function(RED) {
 
         this.config         = config;
         this.lights         = {};
+        this.sensors        = {};
         this.linkButtons    = {};
 
         var node = this;
@@ -63,19 +64,22 @@ module.exports = function(RED) {
         }
 
         this.bridge = new Bridge(address, netmask, gateway, mac, config.port);
+        this.bridge.debugFn = RED.log.debug;
+        this.bridge.warnFn  = RED.log.warn;
+        
         this.bridge.start();
 
         /******************************************************************************************************************
          * functions called by our 'clients'
          *
          */
-        this.register = function(client, type, config) {
+        this.register = function(client, type, name, typ, modelid) {
             RED.log.debug("HueBridgeNode(): register; type = " + type);
 
             if (type === 'light') {
-                var lightid = node.bridge.dsCreateLight(client.id, config.name, config.typ);
+                var lightid = node.bridge.dsCreateLight(client.id, name, typ, modelid);
 
-                RED.log.debug("HueBridgeNode(register-light): name = " + config.name + ", typ = " + config.typ);
+                RED.log.debug("HueBridgeNode(register-light): name = " + name + ", typ = " + typ);
                 RED.log.debug("HueBridgeNode(register-light): lightid = " + lightid);
 
                 this.lights[lightid] = client;
@@ -88,6 +92,15 @@ module.exports = function(RED) {
                 return true;
             } else if (type === 'manage') {
                 return true;
+            } else if (type === 'zll') {
+                var sensorid = node.bridge.dsCreateSensor(typ, client.id, name);
+
+                RED.log.debug("HueBridgeNode(register-zll): name = " + name + ", typ = " + typ);
+                RED.log.debug("HueBridgeNode(register-zll): sensorid = " + sensorid);
+
+                this.sensors[sensorid] = client;
+
+                return sensorid;
             }
 
             return false;
@@ -125,6 +138,16 @@ module.exports = function(RED) {
                 }
             } else if (type === 'manage') {
 
+            } else if (type === 'zll') {
+                for (var idx in this.sensors) {
+                    if (client.id === this.sensors[idx].id) {
+                        RED.log.debug("HueBridgeNode(remove-zll): found sensor!; idx = " + idx);
+                        node.bridge.dsDeleteSensor(idx);
+
+                        delete this.sensors[idx];
+                        return;
+                    }
+                }
             }
         };
 
@@ -148,8 +171,8 @@ module.exports = function(RED) {
 
             if (action === 'clearconfig') {
                 node.bridge.dsClearConfiguration();
-            } else if (action === 'blah') {
-
+                
+                node.bridge.emit('rule-engine-reload');
             }
         });
         
@@ -163,6 +186,10 @@ module.exports = function(RED) {
          * notifications coming from the bridge
          *
          */
+        this.bridge.on('http-error', function(errorText) {
+            RED.log.error("HueBridgeNode(http-error): errorText = " + errorText);
+        });
+
         this.bridge.on('datastore-linkbutton', function(state) {
             RED.log.debug("HueBridgeNode(on-datastore-linkbutton): state = " + state);
 

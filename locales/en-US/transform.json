@@ -1,0 +1,21 @@
+{
+    "transform": {
+        "label": {
+            "name": "Name",
+            "typ": "Type",
+            "use-advanced": "Advanced transformation",
+            "gamma": "Gamma Correction",
+            "rgbmodel": "RGB Model",
+            "adapt": "Adaptation",
+            "white": "White ref."
+        },
+        "placeholder": {
+            "name": "Name"
+        },
+        "errors": {
+            "missing-config": "Missing bridge configuration",
+            "missing-bridge": "Missing bridge",
+            "light-create": "Unable to create light"
+        }
+    }
+}

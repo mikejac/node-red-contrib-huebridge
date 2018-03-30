@@ -1,0 +1,75 @@
+<!--
+ NodeRED Hue Bridge
+ Copyright (C) 2018 Michael Jacobsen.
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<script type="text/x-red" data-template-name="huebridge-transform">
+    <div class="form-row" style="min-width: 600px;">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="transform.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]transform.placeholder.name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-typ"><i class="fa fa-adjust"></i> <span data-i18n="transform.label.typ"></span></label>
+        <select id="node-input-typ" style="width:220px !important">
+            <option value="0">RGB (values: 0.0 - 1.0)</option>
+            <option value="1">RGB (values: 0 - 255)</option>
+        </select>
+    </div>
+
+    <div class="form-tips">
+        <b>Input</b><br/>
+        TBD
+        <br/>
+        <b>Outputs</b><br/>
+        TBD
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="huebridge-transform">
+    Nothing here yet.
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('huebridge-transform', {
+        category: 'huebridge-function',
+        paletteLabel: 'Transform',
+        defaults: {
+            name: {
+                value: ""
+            },
+            typ: {
+                value: "0",
+                required: true
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        color:"#3FADB5",
+        icon: "bridge.png",
+        label: function() {
+            return this.name || "Transform";
+        },
+        labelStyle: function() {
+            return this.name ? "node_label_italic" : ""
+        },
+        oneditprepare: function() {
+            if (typeof this.typ === undefined) {
+                $("#node-input-typ").val("0");
+            }
+        }
+    })
+</script>
