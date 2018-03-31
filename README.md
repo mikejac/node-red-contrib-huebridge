@@ -117,25 +117,33 @@ topic = setstate
 payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":21845,"sat":254}
 ```
 
-3) Blue at 100% brightness (using hue, saturation - colormode 'hs')
+3. Blue at 100% brightness (using hue, saturation - colormode 'hs')
 
-    topic = setstate
-    payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":43690,"sat":254}
+```
+topic = setstate
+payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":43690,"sat":254}
+```
 
-4) White at 100% brightness (using hue, saturation - colormode 'hs')
+4. White at 100% brightness (using hue, saturation - colormode 'hs')
 
-    topic = setstate
-    payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":0,"sat":0}
+```
+topic = setstate
+payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":0,"sat":0}
+```
 
-5) Off
+5. Off
 
-    topic = setstate
-    payload (JSON) = {"on":false,"bri":0}
+```
+topic = setstate
+payload (JSON) = {"on":false,"bri":0}
+```
 
-6) On at 100% brightness
+6. On at 100% brightness
 
-    topic = setstate
-    payload (JSON) = {"on":true,"bri":254}
+```
+topic = setstate
+payload (JSON) = {"on":true,"bri":254}
+```
 
 ## Copyright and license
 
