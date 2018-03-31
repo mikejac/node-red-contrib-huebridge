@@ -103,15 +103,15 @@ Not implemented as a node.
 
 ## Examples
 
-1) Red at 100% brightness (using hue, saturation - colormode 'hs')
+1. Red at 100% brightness (using hue, saturation - colormode 'hs')
 
-    topic = setstate
-    payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":0,"sat":254}
+```jtopic = setstate
+payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":0,"sat":254}```j
 
-2) Green at 100% brightness (using hue, saturation - colormode 'hs')
+2. Green at 100% brightness (using hue, saturation - colormode 'hs')
 
-    topic = setstate
-    payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":21845,"sat":254}
+```jtopic = setstate
+payload (JSON) = {"transitiontime":4,"on":true,"bri":254,"colormode":"hs","hue":21845,"sat":254}```j
 
 3) Blue at 100% brightness (using hue, saturation - colormode 'hs')
 
