@@ -74,7 +74,7 @@ module.exports = function(RED) {
          *
          */
         this.register = function(client, type, name, typ, modelid) {
-            RED.log.debug("HueBridgeNode(): register; type = " + type);
+            RED.log.debug("HueBridgeNode(): register; type = " + type + ", modelid = " + modelid);
 
             if (type === 'light') {
                 var lightid = node.bridge.dsCreateLight(client.id, name, typ, modelid);
